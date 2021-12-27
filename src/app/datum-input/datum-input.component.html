@@ -1,1 +1,1 @@
-<input type="text" inputmode="numeric" [formControl]="innerControl" /> {{value|json}}
+<input type="text" inputmode="numeric" [formControl]="innerControl" (blur)="onBlur()"/> {{value|json}}

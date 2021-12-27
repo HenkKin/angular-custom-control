@@ -23,10 +23,21 @@ export class DatumInputComponent
   extends BaseControlValueAccessor<Date>
   implements OnInit
 {
-  innerControl = new FormControl(null, { updateOn: 'change' });
+  innerControl = new FormControl(null, { updateOn: 'blur' });
 
   constructor() {
     super();
+  }
+
+  ngOnInit() {
+    this.innerControl.valueChanges.subscribe((innerValue: string) => {
+      this._value = this.mapToOuter(innerValue);
+      this.onChange(this._value);
+    });
+  }
+
+  onBlur() {
+    this.onTouched(this._value);
   }
 
   public get value(): Date {
@@ -52,7 +63,7 @@ export class DatumInputComponent
   private mapToOuter(innerValue: string): Date {
     if (innerValue && innerValue.length === 8) {
       return new Date(
-        parseInt(innerValue.substring(4, 7), 10),
+        parseInt(innerValue.substring(4, 8), 10),
         parseInt(innerValue.substring(2, 3), 10),
         parseInt(innerValue.substring(0, 1), 10)
       );
@@ -60,6 +71,4 @@ export class DatumInputComponent
 
     return null;
   }
-
-  ngOnInit() {}
 }
