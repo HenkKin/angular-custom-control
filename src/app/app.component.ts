@@ -14,7 +14,7 @@ export class AppComponent {
     this.form = this.formBuilder.group({
       firstName: new FormControl('', { updateOn: 'blur' }),
       lastName: new FormControl('', { updateOn: 'blur' }),
-      birthDate: new FormControl(null, { updateOn: 'change' }),
+      birthDate: new FormControl(null, { updateOn: 'blur' }),
       startDate: new FormControl(null, { updateOn: 'blur' }),
       endDate: new FormControl(null, { updateOn: 'blur' }),
       city: new FormControl('', { updateOn: 'blur' }),

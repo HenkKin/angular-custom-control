@@ -1,4 +1,11 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -23,6 +30,8 @@ export class DatumInputComponent
   extends BaseControlValueAccessor<Date>
   implements OnInit
 {
+  // @Output('blur') blurChange = new EventEmitter<FocusEvent>();
+
   innerControl = new FormControl(null, { updateOn: 'blur' });
 
   constructor() {
@@ -36,16 +45,19 @@ export class DatumInputComponent
     });
   }
 
-  onBlur() {
+  onBlur(event: FocusEvent) {
     this.onTouched(this._value);
+    // this.blurChange.emit(event);
   }
 
   public get value(): Date {
-    return this.mapToOuter(this.innerControl.value);
+    return this._value;
   }
   @Input()
   public set value(value: Date) {
-    this.innerControl.setValue(this.mapToInner(value));
+    if (value !== this._value) {
+      this.innerControl.setValue(this.mapToInner(value));
+    }
   }
 
   private mapToInner(outerValue: Date): string {
@@ -64,8 +76,8 @@ export class DatumInputComponent
     if (innerValue && innerValue.length === 8) {
       return new Date(
         parseInt(innerValue.substring(4, 8), 10),
-        parseInt(innerValue.substring(2, 3), 10),
-        parseInt(innerValue.substring(0, 1), 10)
+        parseInt(innerValue.substring(2, 4), 10) - 1,
+        parseInt(innerValue.substring(0, 2), 10)
       );
     }
 
