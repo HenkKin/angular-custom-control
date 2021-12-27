@@ -1,0 +1,27 @@
+<hello name="{{ name }}"></hello>
+<p>Start editing to see some magic happen :)</p>
+<form [formGroup]="form">
+  <p>
+    <input type="text" formControlName="firstName" />
+  </p>
+
+  <p>
+    <input type="text" formControlName="lastName" />
+  </p>
+
+  <p>
+    <app-datum-input formControlName="birthDate"></app-datum-input>
+  </p>
+<!-- 
+  <p>
+    <app-datum-input formControlName="startDate"></app-datum-input>
+  </p>
+
+  <p>
+    <app-datum-input formControlName="endDate"></app-datum-input>
+  </p> -->
+
+  <p>
+    <input type="text" formControlName="city" />
+  </p>
+</form>
