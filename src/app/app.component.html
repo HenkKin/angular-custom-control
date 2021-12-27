@@ -12,16 +12,20 @@
   <p>
     <app-datum-input formControlName="birthDate"></app-datum-input>
   </p>
-<!-- 
+  
   <p>
     <app-datum-input formControlName="startDate"></app-datum-input>
   </p>
 
   <p>
     <app-datum-input formControlName="endDate"></app-datum-input>
-  </p> -->
+  </p>
 
   <p>
     <input type="text" formControlName="city" />
+  </p>
+
+  <p>
+    {{ form.getRawValue() | json }}
   </p>
 </form>

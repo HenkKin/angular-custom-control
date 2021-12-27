@@ -11,19 +11,19 @@ import { BaseControlValueAccessor } from '../base-control-value-accessor';
   selector: 'app-datum-input',
   templateUrl: './datum-input.component.html',
   styleUrls: ['./datum-input.component.css'],
-  // providers: [
-  //   {
-  //     provide: NG_VALUE_ACCESSOR,
-  //     multi: true,
-  //     useExisting: forwardRef(() => DatumInputComponent),
-  //   },
-  // ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => DatumInputComponent),
+    },
+  ],
 })
 export class DatumInputComponent
   extends BaseControlValueAccessor<Date>
   implements OnInit
 {
-  innerControl = new FormControl(null, { updateOn: 'blur' });
+  innerControl = new FormControl(null, { updateOn: 'change' });
 
   constructor() {
     super();
