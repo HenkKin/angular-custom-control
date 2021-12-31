@@ -12,13 +12,19 @@
   <p>
     <app-datum-input formControlName="birthDate"></app-datum-input>
   </p>
-  
+
   <p>
-    <app-datum-input formControlName="startDate"></app-datum-input>
+    <app-datum-input tabindex="0" formControlName="startDate"></app-datum-input>
   </p>
 
   <p>
-    <app-datum-input formControlName="endDate"></app-datum-input>
+    <app-datum-input
+      formControlName="endDate"
+      (blur)="onBlur($event)"
+      (keydown)="onKeydown($event)"
+      (focus)="onFocus($event)"
+      (input)="onInput($event)"
+    ></app-datum-input>
   </p>
 
   <p>

@@ -6,12 +6,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BaseControl } from '../base-control';
 import { BaseControlValueAccessor } from '../base-control-value-accessor';
 
 @Component({
@@ -26,11 +22,15 @@ import { BaseControlValueAccessor } from '../base-control-value-accessor';
     },
   ],
 })
-export class DatumInputComponent
-  extends BaseControlValueAccessor<Date>
-  implements OnInit
-{
-  // @Output('blur') blurChange = new EventEmitter<FocusEvent>();
+export class DatumInputComponent extends BaseControl<Date> implements OnInit {
+  @Output() blur = new EventEmitter<FocusEvent>();
+  @Output() focus = new EventEmitter<FocusEvent>();
+
+  // Make sure container can receive focus or else blur events won't be seen.
+  // @HostBinding('attr.tabindex') tabindex = '0';
+  // @HostListener('blur', ['$event.target']) onBlur2(target) {
+  //   console.log(`onBlur(): ${new Date()} - ${JSON.stringify(target)}`);
+  // }
 
   innerControl = new FormControl(null, { updateOn: 'blur' });
 
@@ -46,8 +46,22 @@ export class DatumInputComponent
   }
 
   onBlur(event: FocusEvent) {
+    console.log('blur datum');
     this.onTouched(this._value);
-    // this.blurChange.emit(event);
+    this.blur.emit(event);
+  }
+
+  onFocus(event: FocusEvent): void {
+    console.log('focus datum');
+    this.focus.emit(event);
+  }
+
+  onKeydown(event: KeyboardEvent) {
+    console.log('keydown datum');
+  }
+
+  onInput(event: Event): void {
+    console.log('input datum');
   }
 
   public get value(): Date {

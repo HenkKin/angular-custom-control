@@ -20,4 +20,22 @@ export class AppComponent {
       city: new FormControl('', { updateOn: 'blur' }),
     });
   }
+
+  
+  onBlur(event: FocusEvent) {
+    console.log('blur app');
+    // this.blurChange.emit(event);
+  }
+
+  onFocus(event: FocusEvent): void {
+    console.log('focus app');
+  }
+
+  onKeydown(event: KeyboardEvent) {
+    console.log('keydown app');
+  }
+
+  onInput(event: Event): void {
+    console.log('input app');
+  }
 }

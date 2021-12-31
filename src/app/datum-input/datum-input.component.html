@@ -2,6 +2,10 @@
   type="text"
   inputmode="numeric"
   [formControl]="innerControl"
+  tabindex="0"
   (blur)="onBlur($event)"
+  (keydown)="onKeydown($event)"
+  (focus)="onFocus($event)"
+  (input)="onInput($event)"
 />
 {{ value | json }}
