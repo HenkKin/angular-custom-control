@@ -42,11 +42,13 @@ export class DatumInputComponent extends BaseControl<Date> implements OnInit {
     this.innerControl.valueChanges.subscribe((innerValue: string) => {
       this._value = this.mapToOuter(innerValue);
       this.onChange(this._value);
+      // updateon 'change': this.onTouched(this._value);
     });
   }
 
   onBlur(event: FocusEvent) {
     console.log('blur datum');
+    // updateon 'blur': this.onTouched(this._value);
     this.onTouched(this._value);
     this.blur.emit(event);
   }
