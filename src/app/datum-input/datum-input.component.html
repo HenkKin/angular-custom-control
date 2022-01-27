@@ -2,10 +2,21 @@
   type="text"
   inputmode="numeric"
   [formControl]="innerControl"
-  tabindex="0"
   (blur)="onBlur($event)"
   (keydown)="onKeydown($event)"
   (focus)="onFocus($event)"
   (input)="onInput($event)"
+  [attr.tabindex]="getTabindex(2)"
+/>
+
+<input
+  type="text"
+  inputmode="numeric"
+  [formControl]="innerControl"
+  (blur)="onBlur($event)"
+  (keydown)="onKeydown($event)"
+  (focus)="onFocus($event)"
+  (input)="onInput($event)"
+  [attr.tabindex]="getTabindex(1)"
 />
 {{ value | json }}

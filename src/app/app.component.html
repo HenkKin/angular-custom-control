@@ -2,33 +2,43 @@
 <p>Start editing to see some magic happen :)</p>
 <form [formGroup]="form">
   <p>
-    <input type="text" formControlName="firstName" />
+    FirstName<br />
+    <input type="text" formControlName="firstName" tabindex="6" />
   </p>
 
   <p>
-    <input type="text" formControlName="lastName" />
+    LastName<br />
+    <input type="text" formControlName="lastName" tabindex="5" />
   </p>
 
   <p>
-    <app-datum-input formControlName="birthDate"></app-datum-input>
+    BirthDate<br />
+    <app-datum-input formControlName="birthDate" tabindex="4"></app-datum-input>
   </p>
 
   <p>
-    <app-datum-input tabindex="0" formControlName="startDate"></app-datum-input>
+    StartDate<br />
+    <app-datum-input
+      formControlName="startDate"
+      tabindex="3"
+    ></app-datum-input>
   </p>
 
   <p>
+    EndDate<br />
     <app-datum-input
       formControlName="endDate"
       (blur)="onBlur($event)"
       (keydown)="onKeydown($event)"
       (focus)="onFocus($event)"
       (input)="onInput($event)"
+      tabindex="2"
     ></app-datum-input>
   </p>
 
   <p>
-    <input type="text" formControlName="city" />
+    City<br />
+    <input type="text" formControlName="city" tabindex="1" />
   </p>
 
   <p>

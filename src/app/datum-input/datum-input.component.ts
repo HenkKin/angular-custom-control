@@ -1,12 +1,18 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   forwardRef,
+  HostBinding,
   Input,
   OnInit,
+  Optional,
   Output,
+  Renderer2,
+  Self,
+  Attribute,
 } from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormControl, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseControl } from '../base-control';
 import { BaseControlValueAccessor } from '../base-control-value-accessor';
 
@@ -25,6 +31,7 @@ import { BaseControlValueAccessor } from '../base-control-value-accessor';
 export class DatumInputComponent extends BaseControl<Date> implements OnInit {
   @Output() blur = new EventEmitter<FocusEvent>();
   @Output() focus = new EventEmitter<FocusEvent>();
+  // @HostBinding('attr.tabindex') tabindex: number;
 
   // Make sure container can receive focus or else blur events won't be seen.
   // @HostBinding('attr.tabindex') tabindex = '0';
@@ -34,8 +41,22 @@ export class DatumInputComponent extends BaseControl<Date> implements OnInit {
 
   innerControl = new FormControl(null, { updateOn: 'blur' });
 
-  constructor() {
+  get tabindex(): number {
+    return this._tabindex;
+  }
+  constructor(
+    @Attribute('tabindex') private _tabindex: number,
+    private outerElementRef: ElementRef<HTMLElement>
+  ) {
     super();
+    // this.outerElementRef.nativeElement.removeAttribute('tabindex');
+    this.outerElementRef.nativeElement.setAttribute('tabindex', '-1');
+  }
+
+  getTabindex(innerTabindex: number): number {
+    //return parseFloat(this.tabindex.toString() + '.' //+ innerTabindex/);
+    //return (this.tabindex * 1) + (innerTabindex/1000)
+    return this.tabindex;
   }
 
   ngOnInit() {
@@ -44,6 +65,8 @@ export class DatumInputComponent extends BaseControl<Date> implements OnInit {
       this.onChange(this._value);
       // updateon 'change': this.onTouched(this._value);
     });
+
+    console.log('tabindex', this.tabindex);
   }
 
   onBlur(event: FocusEvent) {
@@ -99,4 +122,8 @@ export class DatumInputComponent extends BaseControl<Date> implements OnInit {
 
     return null;
   }
+}
+
+function coerceNumberProperty(tabindex: any) {
+  throw new Error('Function not implemented.');
 }
