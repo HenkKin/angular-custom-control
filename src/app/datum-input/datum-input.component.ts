@@ -11,10 +11,10 @@ import {
   Renderer2,
   Self,
   Attribute,
+  AfterViewInit,
 } from '@angular/core';
 import { FormControl, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseControl } from '../base-control';
-import { BaseControlValueAccessor } from '../base-control-value-accessor';
 
 @Component({
   selector: 'app-datum-input',
@@ -28,10 +28,29 @@ import { BaseControlValueAccessor } from '../base-control-value-accessor';
     },
   ],
 })
-export class DatumInputComponent extends BaseControl<Date> implements OnInit {
+export class DatumInputComponent
+  extends BaseControl<Date>
+  implements OnInit, AfterViewInit
+{
   @Output() blur = new EventEmitter<FocusEvent>();
   @Output() focus = new EventEmitter<FocusEvent>();
-  // @HostBinding('attr.tabindex') tabindex: number;
+  private _tabindex = '0';
+  @HostBinding('attr.tabindex')
+  @Input()
+  set tabindex(index: string | number) {
+    // dit is nodig omdat de type wel number is, maar de inhoud door de input binding een string
+    console.log('settabindex', this._tabindex, index);
+    this._tabindex = index.toString();
+
+    // this._tabindex = coerceNumberProperty(index, 0);
+    // to support databinding to tabindex, the html attribute needs to be updated
+    // if (this.nativeElement) {
+    //   this.nativeElement.setAttribute('tabindex', this._tabindex);
+    // }
+  }
+  get tabindex(): string {
+    return this._tabindex;
+  }
 
   // Make sure container can receive focus or else blur events won't be seen.
   // @HostBinding('attr.tabindex') tabindex = '0';
@@ -41,22 +60,25 @@ export class DatumInputComponent extends BaseControl<Date> implements OnInit {
 
   innerControl = new FormControl(null, { updateOn: 'blur' });
 
-  get tabindex(): number {
-    return this._tabindex;
-  }
+  // get tabindex(): number {
+  //   return this._tabindex;
+  // }
   constructor(
-    @Attribute('tabindex') private _tabindex: number,
+    // @Attribute('tabindex') private _tabindex: number,
     private outerElementRef: ElementRef<HTMLElement>
   ) {
     super();
     // this.outerElementRef.nativeElement.removeAttribute('tabindex');
+  }
+
+  ngAfterViewInit(): void {
     this.outerElementRef.nativeElement.setAttribute('tabindex', '-1');
   }
 
   getTabindex(innerTabindex: number): number {
     //return parseFloat(this.tabindex.toString() + '.' //+ innerTabindex/);
     //return (this.tabindex * 1) + (innerTabindex/1000)
-    return this.tabindex;
+    return parseInt(this.tabindex, 10);
   }
 
   ngOnInit() {
@@ -122,8 +144,4 @@ export class DatumInputComponent extends BaseControl<Date> implements OnInit {
 
     return null;
   }
-}
-
-function coerceNumberProperty(tabindex: any) {
-  throw new Error('Function not implemented.');
 }
